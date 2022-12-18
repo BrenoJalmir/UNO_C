@@ -66,8 +66,6 @@ int main() {
 
     // tudo acima debugado, esperançosamente 🙏
 
-    debug("----- MINHA VEZ -----");
-
     // depois
 
     // se o bot anterior jogou uma carta de ação de compra, comprar a quantidade especificada
@@ -75,6 +73,9 @@ int main() {
                                                             : 0;
     comprar = strcmp(previous_action, "BUY") == 0 ? 0 : comprar;
     if (comprar > 0 && joguei_pra_comprar == 0) {
+      if (comprar == 4) {
+        printf("SAY explodi\n");
+      }
       // mandando para os outros bots lerem
       printf("BUY %d\n", comprar);
       for (int i = 0; i < comprar; i++) {
@@ -91,8 +92,12 @@ int main() {
           // a carta da mesa vira a descartada
           na_mesa = cartas_bot[i];
           // se houver, descarta uma carta e atualiza a mão
-          cartas_bot = discard_and_update_cards(cartas_bot, cartas_bot[i], &num_cartas, i, &joguei_pra_comprar);
+          cartas_bot = discard_and_update_cards(cartas_bot, cartas_bot[i], &num_cartas, i, &joguei_pra_comprar, &na_mesa);
           // como o bot jogou não há necessidade de comprar
+          if (num_cartas == 1)
+            printf("SAY Essa aqui é caixa já\n");
+          else if (num_cartas >= 20)
+            printf("SAY Aqui virou bagunça\n");
           comprar = 0;
           break;
         }
@@ -105,8 +110,6 @@ int main() {
         cartas_bot = buy_card(cartas_bot, &num_cartas, complement);
       }
     }
-
-    // tiver com 1 carta na mão "SAY Essa aqui é caixa já"
   }
 
   return 0;

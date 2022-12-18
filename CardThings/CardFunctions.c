@@ -122,11 +122,12 @@ Carta *update_cards(Carta *cartas, int *qtd_cartas, int index) {
 }
 
 // função que trata o que deve acontecer quando dada carta for descartada e retorna a mão atualizada
-Carta *discard_and_update_cards(Carta *cartas, Carta descartada, int *qtd_cartas, int index, int *joguei_pra_comprar) {
+Carta *discard_and_update_cards(Carta *cartas, Carta descartada, int *qtd_cartas, int index, int *joguei_pra_comprar, Carta *na_mesa) {
   if (descartada.numero == A || descartada.numero == C) {
     int index_prox_naipe = index == ((*qtd_cartas) - 1) ? 0 : index + 1;
     // mandando para os outros bots lerem
     printf("DISCARD %s%s %s\n", numeros[descartada.numero - 1], naipes[descartada.naipe], naipes[cartas[index_prox_naipe].naipe]);
+    na_mesa->naipe = read_suit(naipes[cartas[index_prox_naipe].naipe]);
     cartas = update_cards(cartas, qtd_cartas, index);
     *joguei_pra_comprar = 1;
   } else {
