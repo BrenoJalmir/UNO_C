@@ -13,7 +13,6 @@ int main() {
   char temp[MAX_LINE];
   char my_id[MAX_ID_SIZE];
   Carta *cartas_bot;
-  char *debugar = malloc(sizeof(char));
   // num_cartas começa com -1 pois o modo de leitura da quantidade é a partir da quantidade de espaços
   // na formatação, que é equivalente ao número de cartas dadas + 1
   int num_cartas = -1;
@@ -72,7 +71,7 @@ int main() {
     comprar = na_mesa.numero == V ? 2 : na_mesa.numero == C ? 4
                                                             : 0;
     comprar = strcmp(previous_action, "BUY") == 0 ? 0 : comprar;
-    if (comprar > 0 && joguei_pra_comprar == 0) {
+    if (comprar > 0 && joguei_pra_comprar == 0 && strcmp(previous_action, "BUY") != 0) {
       if (comprar == 4) {
         printf("SAY explodi\n");
       }
@@ -112,5 +111,6 @@ int main() {
     }
   }
 
+  free(cartas_bot);
   return 0;
 }
